@@ -16,6 +16,6 @@ app.get('/', (req, res) => {
 const { userRouter } = require('./routers')
 app.use('/', userRouter)
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
     console.log(`server started on port ${PORT}`)
 })
