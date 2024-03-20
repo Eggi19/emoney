@@ -29,7 +29,6 @@ module.exports = {
             
             return { data: response.rows[0], error: null }
         } catch (error) {
-            console.log(error);
             return { data: null, error: { message: 'Internal server error', code: 500, status: 102 } }
         }
     }

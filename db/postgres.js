@@ -1,15 +1,16 @@
 const { Pool } = require('pg')
+require('dotenv').config();
 
 let client
 
 const pgClient = () => {
   if (!client) {
     client = new Pool({
-      host: 'localhost',
-      port: 5432,
-      user: 'postgres',
-      password: 'postgres',
-      database: 'emoney_db',
+      host: process.env.ENV_HOST,
+      port: process.env.ENV_PORT,
+      user: process.env.ENV_USER_DB,
+      password: process.env.ENV_PASSWORD_DB,
+      database: process.env.ENV_NAME_DB,
     });
   }
   return client;
