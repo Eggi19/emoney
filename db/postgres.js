@@ -1,7 +1,6 @@
 const { Pool, Client } = require('pg')
 require('dotenv').config();
 
-
 //local db
 // const pgClient = () => {
 //   let client
