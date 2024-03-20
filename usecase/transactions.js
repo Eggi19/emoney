@@ -105,8 +105,8 @@ module.exports = {
 
             return {
                 data: {
-                    offset: offset,
-                    limit: limit,
+                    offset: parseInt(offset) || 0,
+                    limit: parseInt(limit) || 0,
                     records: result.data
                 },
                 error: null
