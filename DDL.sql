@@ -71,6 +71,6 @@ CREATE TABLE transactions (
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
     deleted_at TIMESTAMP,
-    user_email BIGINT NOT NULL,
+    user_email VARCHAR NOT NULL,
     FOREIGN KEY (user_email) REFERENCES users(email)
 );
