@@ -9,7 +9,7 @@ module.exports = {
         
             return { data: response.rows, error: null }
         } catch (error) {
-            return { data: null, error: { message: 'Internal server error', code: 500, status: 102 } }
+            return { data: null, error: { message: error.message, code: 500, status: 102 } }
         }
     },
 
