@@ -22,5 +22,15 @@ module.exports = {
         } catch (error) {
             return { data: null, error: { message: 'Internal server error', code: 500, status: 102 } }
         }
+    },
+
+    countCurrentTransaction: async () => {
+        try {
+            const response = await client.query(`SELECT COUNT(*) AS total FROM transactions WHERE DATE(created_at) = CURRENT_DATE`)
+
+            return { data: response.rows[0].total, error: null }
+        } catch (error) {
+            return { data: null, error: { message: 'Internal server error', code: 500, status: 102 } }
+        }
     }
 }

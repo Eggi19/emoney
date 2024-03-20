@@ -1,9 +1,15 @@
+const { generateInvoiceNumber } = require("../helpers/invoiceNumber");
 const { topUpValidation } = require("../helpers/validation");
 const { Transaction, User, Service } = require("../repository")
 
 module.exports = {
     topUpBalance: async (req, email) => {
         try {
+            const invoiceNumber = await generateInvoiceNumber()
+            if (invoiceNumber.error) {
+                throw invoiceNumber.error
+            }
+
             const error = topUpValidation(req)
             if (error) {
                 throw error
@@ -20,7 +26,7 @@ module.exports = {
             }
 
             const recordResponse = await Transaction.recordTransaction({
-                invoice_number: 'number',
+                invoice_number: invoiceNumber.data,
                 transaction_type: 'TOPUP',
                 description: 'Top Up balance',
                 total_amount: req.top_up_amount,
@@ -38,6 +44,11 @@ module.exports = {
 
     transaction: async (req, email) => {
         try {
+            const invoiceNumber = await generateInvoiceNumber()
+            if (invoiceNumber.error) {
+                throw invoiceNumber.error
+            }
+
             if (!req.service_code) {
                 throw { message: 'Parameter service_code harus di isi', code: 400, status: 102 }
             }
@@ -69,7 +80,7 @@ module.exports = {
             }
 
             const recordResponse = await Transaction.recordTransaction({
-                invoice_number: 'number',
+                invoice_number: invoiceNumber.data,
                 transaction_type: 'PAYMENT',
                 description: getServiceReponse.data.service_name,
                 total_amount: getServiceReponse.data.service_tarif,
@@ -81,7 +92,7 @@ module.exports = {
 
             return {
                 data: {
-                    invoice_number: 'number',
+                    invoice_number: invoiceNumber.data,
                     service_code: getServiceReponse.data.service_code,
                     service_name: getServiceReponse.data.service_name,
                     transaction_type: 'PAYMENT',
